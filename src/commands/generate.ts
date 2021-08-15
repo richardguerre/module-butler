@@ -10,6 +10,59 @@ export default class Generate extends Command {
   static description =
     'generates modules using module names (comma and/or line separated) in .module-butler/input and template files in the templates directory.';
 
+  static args = [
+    {
+      name: 'module1',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module2',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module3',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module4',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module5',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module6',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module7',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module8',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module9',
+      description: 'Name of module',
+      required: false,
+    },
+    {
+      name: 'module10',
+      description: 'Name of module',
+      required: false,
+    },
+  ];
+
   static flags = {
     help: flags.help({ char: 'h', description: 'show help for generate command' }),
     force: flags.boolean({
@@ -19,7 +72,7 @@ export default class Generate extends Command {
   };
 
   async run() {
-    const { flags } = this.parse(Generate);
+    const { flags, args } = this.parse(Generate);
     cli.action.start('Initializing generator');
     const root = process.cwd();
     const moduleButlerDir = path.resolve(root, './.module-butler');
@@ -62,9 +115,16 @@ export default class Generate extends Command {
       });
     }
 
-    // read and parse input
-    const inputRaw = await fs.promises.readFile(inputPath, { encoding: 'utf8' });
-    const modules = inputRaw.split(/,+|\s+/).filter((s) => s !== ''); // the filter removes any new line the user might have added between the module names
+    let modules: Array<string> = [];
+    // if user provides module names through args use that instead of input file
+    const argModules = Object.values(args).filter((s) => s);
+    if (argModules.length > 0) {
+      modules = argModules;
+    } else {
+      // read and parse input
+      const inputRaw = await fs.promises.readFile(inputPath, { encoding: 'utf8' });
+      modules = inputRaw.split(/,+|\s+/).filter((s) => s !== ''); // the filter removes any new line the user might have added between the module names
+    }
 
     cli.action.stop(logSymbols.success);
 
