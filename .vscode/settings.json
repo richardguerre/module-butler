@@ -1,4 +1,3 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: Create-module-butler-from-relay-butler]"
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
