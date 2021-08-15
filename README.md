@@ -142,17 +142,30 @@ USAGE
 # Commands
 
 <!-- commands -->
-* [`module-butler generate`](#module-butler-generate)
+* [`module-butler generate [MODULE1] [MODULE2] [MODULE3] [MODULE4] [MODULE5] [MODULE6] [MODULE7] [MODULE8] [MODULE9] [MODULE10]`](#module-butler-generate-module1-module2-module3-module4-module5-module6-module7-module8-module9-module10)
 * [`module-butler help [COMMAND]`](#module-butler-help-command)
 * [`module-butler init`](#module-butler-init)
 
-## `module-butler generate`
+## `module-butler generate [MODULE1] [MODULE2] [MODULE3] [MODULE4] [MODULE5] [MODULE6] [MODULE7] [MODULE8] [MODULE9] [MODULE10]`
 
 generates modules using module names (comma and/or line separated) in .module-butler/input and template files in the templates directory.
 
 ```
 USAGE
-  $ module-butler generate
+  $ module-butler generate [MODULE1] [MODULE2] [MODULE3] [MODULE4] [MODULE5] [MODULE6] [MODULE7] [MODULE8] [MODULE9] 
+  [MODULE10]
+
+ARGUMENTS
+  MODULE1   Name of module
+  MODULE2   Name of module
+  MODULE3   Name of module
+  MODULE4   Name of module
+  MODULE5   Name of module
+  MODULE6   Name of module
+  MODULE7   Name of module
+  MODULE8   Name of module
+  MODULE9   Name of module
+  MODULE10  Name of module
 
 OPTIONS
   -F, --force  forcibly overwrite existing files
