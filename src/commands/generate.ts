@@ -5,7 +5,7 @@ import * as graphql from 'graphql';
 import * as logSymbols from 'log-symbols';
 import * as handlebars from 'handlebars';
 import cli from 'cli-ux';
-import { ChildToParentTypeMapU, Config, FragmentQuery, TemplateFragment, TemplateProps } from '../utils/types';
+import { Config, TemplateFragment, TemplateProps } from '../utils/types';
 import { isRunningInRoot } from '../utils';
 
 export default class Generate extends Command {
@@ -60,83 +60,6 @@ export default class Generate extends Command {
         fileContentCompiler: handlebars.compile(templateRaw),
       });
     }
-
-    // read and parse schema using graphql.buildSchema
-    const schemaRaw = await fs.promises.readFile(path.resolve(root, config.schema), { encoding: 'utf8' });
-    const schema = graphql.buildSchema(schemaRaw);
-    const queryType = schema.getQueryType()?.toString() ?? 'Query';
-    const schemaTypes = Object.keys(schema.getTypeMap());
-    const nodeTypes = new Set(
-      schema
-        // @ts-ignore
-        .getPossibleTypes({ name: config.nodeTypeName ?? 'Node' })
-        .map((type) => type.toString())
-    );
-    const childToParentTypeMap = new Map<string, ChildToParentTypeMapU>();
-    for (const typeName of schemaTypes) {
-      const type = schema.getType(typeName);
-
-      if (
-        // @ts-ignore
-        !type?.getFields ||
-        type.astNode?.kind === 'InputObjectTypeDefinition'
-      ) {
-        continue;
-      }
-
-      const fields: graphql.GraphQLField<any, any>[] = Object.values(
-        type
-          // @ts-ignore
-          .getFields()
-      );
-      for (const field of fields) {
-        const child = field.type.toString().replace(/!|\[|\]/g, '');
-        const parentType: ChildToParentTypeMapU = {
-          typeName,
-          path: field.name,
-        };
-        const existing = childToParentTypeMap.get(child)?.typeName;
-        if (existing) {
-          if (existing === queryType) {
-            continue;
-          } else if (typeName === queryType || (!existing.includes(child) && typeName.includes(child)) || typeName.length < existing.length) {
-            childToParentTypeMap.set(child, parentType);
-          }
-        } else {
-          childToParentTypeMap.set(child, parentType);
-        }
-      }
-    }
-
-    const createFragmentQuery = (typeName: string, propName: string, partialQuery: string, path: string): FragmentQuery => {
-      // base case 1 (it exists on the node type - Relay spec)
-      if (nodeTypes.has(typeName)) {
-        return {
-          path: `${propName}${path === '' ? '' : `.${path}`}`,
-          partialQuery: `${propName}: node(id: \"mockId\") {\n... on ${typeName} {\n${partialQuery}\n}\n}`,
-        };
-      }
-
-      // base case 2 (it exists on the query type)
-      if (typeName === queryType) {
-        return {
-          path,
-          partialQuery,
-        };
-      }
-
-      const parentType = childToParentTypeMap.get(typeName);
-      if (parentType) {
-        return createFragmentQuery(
-          parentType.typeName,
-          propName,
-          `${path === '' ? `${propName}: ` : ''}${parentType.path} {\n${partialQuery}\n}`,
-          `${path === '' ? propName : parentType.path}${path === '' ? '' : `.${path}`}`
-        );
-      }
-
-      return null;
-    };
 
     // read and parse input
     const inputRaw = await fs.promises.readFile(inputPath, { encoding: 'utf8' });
@@ -216,23 +139,12 @@ Naming convention to follow <ComponentName>_<propName>.
     for (const component of components) {
       this.log(`${logSymbols.info} Creating ${component.componentName}`);
 
-      const componentPath = path.resolve(root, config.componentsDirectory ?? './src/components', `./${component.componentName}`);
+      const componentPath = path.resolve(root, config.outputDirectory ?? './src/components', `./${component.componentName}`);
       let queryRaw = '';
       const queryFragments: {
         propName: string;
         dataPath: string;
       }[] = [];
-      for (const fragment of component.fragments) {
-        const fragmentQuery = createFragmentQuery(fragment.typeCondition, fragment.propName, `...${fragment.name}`, '');
-
-        queryRaw += `\n${fragmentQuery?.partialQuery ?? `# Could not generate query for ${fragment.name}. Please write your own query.`}`;
-        if (fragmentQuery) {
-          queryFragments.push({
-            propName: fragment.propName,
-            dataPath: fragmentQuery.path,
-          });
-        }
-      }
       queryRaw = `query ${component.componentName}Query {${queryRaw}\n}`;
 
       const templateProps: TemplateProps = {
