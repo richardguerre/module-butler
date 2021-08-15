@@ -1,0 +1,4 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: master]"
+}
