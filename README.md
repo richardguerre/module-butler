@@ -131,7 +131,7 @@ $ npm install -g module-butler
 $ module-butler COMMAND
 running command...
 $ module-butler (-v|--version|version)
-module-butler/0.0.2 darwin-x64 node-v14.17.1
+module-butler/0.3.0 darwin-x64 node-v14.17.1
 $ module-butler --help [COMMAND]
 USAGE
   $ module-butler COMMAND
@@ -159,7 +159,7 @@ OPTIONS
   -h, --help   show help for generate command
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/richardguerre/module-butler/blob/v0.0.2/src/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/richardguerre/module-butler/blob/v0.3.0/src/commands/generate.ts)_
 
 ## `module-butler help [COMMAND]`
 
@@ -190,5 +190,5 @@ OPTIONS
   -h, --help  show help for init command
 ```
 
-_See code: [src/commands/init.ts](https://github.com/richardguerre/module-butler/blob/v0.0.2/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/richardguerre/module-butler/blob/v0.3.0/src/commands/init.ts)_
 <!-- commandsstop -->
