@@ -36,7 +36,7 @@ export default class Init extends Command {
 
     // create index template file
     cli.action.start('Creating index template file');
-    await fs.promises.writeFile(path.resolve(moduleButlerTemplatesDir, './index.tsx.hbs'), indexTemplate);
+    await fs.promises.writeFile(path.resolve(moduleButlerTemplatesDir, './index.js.hbs'), indexTemplate);
     cli.action.stop(logSymbols.success);
 
     // create .module-butler/input
@@ -46,7 +46,7 @@ export default class Init extends Command {
 
     this.log(`✨  Done
 
-You can now add your module names (comma and/or line separated) in .module-butler/input and run \`module-butler generate\` to generate your components.
+You can now add your module names (comma and/or line separated) in .module-butler/input and run \`module-butler generate\` to generate your modules.
 
 You can also check the .module-butler directory, and make any changes you want.
 
@@ -59,7 +59,7 @@ ${logSymbols.info} TIP: It is recommended to add a script in package.json, that 
 For example:
   "scripts": {
     ...
-    "module-butler": "module-butler generate && relay-compiler && prettier --write src/components/"
+    "module-butler": "module-butler generate && relay-compiler && prettier --write modules/"
   }
 Then you can just run \`npm run module-butler\` or \`yarn module-butler\`.
 `);

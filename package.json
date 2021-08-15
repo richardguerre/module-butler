@@ -1,7 +1,7 @@
 {
   "name": "module-butler",
-  "description": "A React Relay helper CLI that takes in GraphQL operations and outputs React components with Relay Hooks.",
-  "version": "0.2.0",
+  "description": "A CLI that takes in module names and outputs a folder for each module name.",
+  "version": "0.0.1",
   "author": "Richard Guerre @richardguerre",
   "bin": {
     "module-butler": "./bin/run"
@@ -51,13 +51,12 @@
   "homepage": "https://github.com/richardguerre/module-butler",
   "keywords": [
     "react",
-    "relay",
-    "react-relay",
     "generator",
     "codegen",
-    "graphql",
     "component",
-    "components"
+    "components",
+    "module",
+    "modules"
   ],
   "license": "MIT",
   "main": "lib/index.js",

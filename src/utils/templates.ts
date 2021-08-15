@@ -1,2 +1,2 @@
-export const indexTemplate = `console.log('module name:', {{name}})
+export const indexTemplate = `console.log('module name:', '{{name}}');
 `;
