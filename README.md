@@ -10,13 +10,12 @@ A CLI that takes in module names and outputs a folder for each module name.
 ## Table of Contents
 
 <!-- toc -->
-
-- [Geting started](#geting-started)
-- [Example](#example)
-- [Tips](#tips)
-- [Templates](#templates)
-- [Usage](#usage)
-- [Commands](#commands)
+* [Geting started](#geting-started)
+* [Example](#example)
+* [Tips](#tips)
+* [Templates](#templates)
+* [Usage](#usage)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Geting started
@@ -127,32 +126,29 @@ Templates in `.module-butler/templates/` use handlebars as the templating langua
 # Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g module-butler
 $ module-butler COMMAND
 running command...
 $ module-butler (-v|--version|version)
-module-butler/0.0.1 darwin-x64 node-v14.17.1
+module-butler/0.1.0 darwin-x64 node-v14.17.1
 $ module-butler --help [COMMAND]
 USAGE
   $ module-butler COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 # Commands
 
 <!-- commands -->
-
-- [`module-butler generate`](#module-butler-generate)
-- [`module-butler help [COMMAND]`](#module-butler-help-command)
-- [`module-butler init`](#module-butler-init)
+* [`module-butler generate`](#module-butler-generate)
+* [`module-butler help [COMMAND]`](#module-butler-help-command)
+* [`module-butler init`](#module-butler-init)
 
 ## `module-butler generate`
 
-generates modules using GraphQL operations in input.graphql and template files in the templates directory.
+generates modules using module names (comma and/or line separated) in .module-butler/input and template files in the templates directory.
 
 ```
 USAGE
@@ -163,7 +159,7 @@ OPTIONS
   -h, --help   show help for generate command
 ```
 
-_See code: [src/commands/generate.ts](https://github.com/richardguerre/module-butler/blob/v0.0.1/src/commands/generate.ts)_
+_See code: [src/commands/generate.ts](https://github.com/richardguerre/module-butler/blob/v0.1.0/src/commands/generate.ts)_
 
 ## `module-butler help [COMMAND]`
 
@@ -184,7 +180,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2
 
 ## `module-butler init`
 
-sets up module-butler by creating config.js, templates/\*.hbs files, input in .module-butler/ directory.
+sets up module-butler by creating config.js, templates/*.hbs files, input in .module-butler/ directory.
 
 ```
 USAGE
@@ -194,6 +190,5 @@ OPTIONS
   -h, --help  show help for init command
 ```
 
-_See code: [src/commands/init.ts](https://github.com/richardguerre/module-butler/blob/v0.0.1/src/commands/init.ts)_
-
+_See code: [src/commands/init.ts](https://github.com/richardguerre/module-butler/blob/v0.1.0/src/commands/init.ts)_
 <!-- commandsstop -->

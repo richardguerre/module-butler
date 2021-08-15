@@ -1,7 +1,7 @@
 {
   "name": "module-butler",
   "description": "A CLI that takes in module names and outputs a folder for each module name.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Richard Guerre @richardguerre",
   "bin": {
     "module-butler": "./bin/run"
