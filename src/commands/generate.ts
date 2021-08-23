@@ -141,7 +141,7 @@ export default class Generate extends Command {
         cli.action.start(`\tCreating ${fileName}`);
         const fileContent = template.fileContentCompiler({ name: moduleName });
         const filePath = path.resolve(modulePath, `./${fileName}`);
-        if (flags.force && fs.existsSync(filePath)) {
+        if (!flags.force && fs.existsSync(filePath)) {
           cli.action.stop(`skipped as it already exists.`);
           continue;
         }
