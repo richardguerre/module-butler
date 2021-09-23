@@ -79,16 +79,13 @@ export default class Generate extends Command {
     const configPath = path.resolve(moduleButlerDir, './config.js');
     const inputPath = path.resolve(moduleButlerDir, './input');
 
-    // check that config.js exists and extract it into `config`
+    // check that config.js exists and extract it into config
     let config: Config | null = null;
-    try {
-      config = require(configPath);
-    } catch (err) {
-      if (err.code === 'MODULE_NOT_FOUND') {
-        this.error('Could not find .module-butler/config.js. Run `module-butler init` to set up module-butler.', err);
-        return;
-      }
-      this.error(err);
+    if (fs.existsSync(configPath)) {
+      const configRaw = await fs.promises.readFile(configPath, { encoding: 'utf8' });
+      config = JSON.parse(configRaw);
+    } else {
+      this.error('Could not find .relay-butler/config.js. Run `relay-butler init` to set up relay-butler.');
     }
     if (!config) {
       this.error('Error parsing config.js. Make sure its content is correct, and correctly exported.');
